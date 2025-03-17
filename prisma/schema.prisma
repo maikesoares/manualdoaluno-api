@@ -7,68 +7,81 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model eventos {
-  id       Int        @id @default(autoincrement())
+model Evento {
+  id       Int       @id @default(autoincrement())
   mes_id   Int?
-  data     DateTime   @db.Date
-  meses    meses?     @relation(fields: [mes_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  periodos periodos[]
+  data     DateTime  @db.Date
+  meses    Mes?      @relation(fields: [mes_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  periodos Periodo[]
 
   @@unique([mes_id, data], map: "unique_event")
+  @@map("eventos")
 }
 
-model eventos_calendario {
+model Evento_Calendario {
   id        Int      @id @default(autoincrement())
   data      DateTime @db.Date
   descricao String
   cor       String   @db.VarChar(7)
   inicio    DateTime @db.Date
   fim       DateTime @db.Date
+
+  @@map("eventos_calendario")
 }
 
-model informacoes {
+model Informacao {
   title       String? @db.VarChar(100)
   description String? @db.VarChar(5000)
   id          Int     @id @default(autoincrement())
+
+  @@map("informacoes")
 }
 
-model legendas {
+model Legenda {
   id        Int    @id @default(autoincrement())
   mes_id    Int?
   descricao String
-  meses     meses? @relation(fields: [mes_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  meses     Mes?   @relation(fields: [mes_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("legendas")
 }
 
-model meses {
-  id           Int        @id @default(autoincrement())
-  mes_ano      String     @unique @db.VarChar(7)
-  data_inicial DateTime   @db.Date
-  eventos      eventos[]
-  legendas     legendas[]
+model Mes {
+  id           Int       @id @default(autoincrement())
+  mes_ano      String    @unique @db.VarChar(7)
+  data_inicial DateTime  @db.Date
+  eventos      Evento[]
+  legendas     Legenda[]
+
+  @@map("meses")
 }
 
-model periodos {
+model Periodo {
   id           Int      @id @default(autoincrement())
   evento_id    Int?
   cor          String   @db.VarChar(7)
   starting_day Boolean? @default(false)
   ending_day   Boolean? @default(false)
-  eventos      eventos? @relation(fields: [evento_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  eventos      Evento?  @relation(fields: [evento_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("periodos")
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
-model recursos {
+model Recurso {
   title       String? @db.VarChar(100)
   subtitle    String? @db.VarChar(100)
   description String? @db.VarChar(500)
 
+  @@map("recursos")
   @@ignore
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
-model servicos {
+model Servico {
   title       String? @db.VarChar(100)
   description String? @db.VarChar(500)
 
+  @@map("servicos")
   @@ignore
 }
