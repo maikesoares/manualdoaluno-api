@@ -29,7 +29,7 @@ app.post("/info", async (req, res) => {
     });
   }catch(error) {
     console.log(error);
-    res.status(500).send({message: "Falha ao cadastar uma informação"});
+    res.status(500).send({message: "Falha ao cadastar uma informação."});
   }
   res.status(201).send();
 })
@@ -58,12 +58,31 @@ app.put("/info/:id", async (req, res) => {
     });
   } catch (error){
       console.log(error);
-      return res.status(500).send({message: "Falha ao atualizar o registro"})
+      return res.status(500).send({message: "Falha ao atualizar o registro."})
   }
   res.status(200).send();
 })
 
 // Deletar Informação
+app.delete("/info/:id", async (req, res) => {
+  const id = Number(req.params.id);
+  
+  try{
+    const info = await prisma.informacao.findUnique({where: {id}});
+
+    if(!info) {
+      return res.status(404).send({message: "A informação não foi encontrada." });
+    }
+
+    await prisma.informacao.delete({
+      where: {id}
+    });
+  } catch(error) {
+    console.log(error);
+    return res.status(500).send({message: "Não foi possível remover a informação."})
+  }
+  res.status(200).send();
+})
 
 app.listen(port, () => {
   console.log(`Servidor em execução na porta ${port}`);
