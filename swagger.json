@@ -1,0 +1,52 @@
+{
+  "openapi": "3.0.0",
+  "Informação": {
+    "title": "Manual do Aluno API",
+    "description": "API responsável por gerenciar todo o conteúdo do app Manual do Aluno",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/info": {
+      "get": {
+        "tags": ["Informações"],
+        "summary": "Obter toda as informações",
+        "responses": {
+          "200": {
+            "description": "Retorna uma lista de informações",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Informação"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Informação": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ID da Informação"
+          },
+          "title": {
+            "type": "string",
+            "description": "Titulo da Informação"
+          },
+          "description": {
+            "type": "string",
+            "description": "Descrição da Informação"
+          }
+        }
+      }
+    }
+  }
+}
