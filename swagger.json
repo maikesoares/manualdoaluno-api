@@ -1,6 +1,6 @@
 {
   "openapi": "3.0.0",
-  "Informação": {
+  "informacao": {
     "title": "Manual do Aluno API",
     "description": "API responsável por gerenciar todo o conteúdo do app Manual do Aluno",
     "version": "1.0.0"
@@ -18,7 +18,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Informação"
+                    "$ref": "#/components/schemas/info"
                   }
                 }
               }
@@ -26,11 +26,49 @@
           }
         }
       }
+    },
+    "/info/{id}": {
+      "put": {
+        "tags": ["Informações"],
+        "summary": "Atualizar uma informação",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID da informação a ser atualizada",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/infoInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Informação atualizada com sucesso"
+          },
+          "404": {
+            "description": "Informação não encontrada"
+          },
+          "500": {
+            "description": "Falha ao atualizar o registro da informação"
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
-      "Informação": {
+      "info": {
         "type": "object",
         "properties": {
           "id": {
@@ -44,6 +82,20 @@
           "description": {
             "type": "string",
             "description": "Descrição da Informação"
+          }
+        }
+      },
+      "infoInput": {
+        "type": "object",
+        "required": ["title", "description"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Titulo da Informação"
+          },
+          "description": {
+            "type": "string",
+            "description": "Descriçao da Informação"
           }
         }
       }
