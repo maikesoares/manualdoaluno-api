@@ -1,6 +1,6 @@
 {
   "openapi": "3.0.0",
-  "informacao": {
+  "info": {
     "title": "Manual do Aluno API",
     "description": "API responsável por gerenciar todo o conteúdo do app Manual do Aluno",
     "version": "1.0.0"
@@ -9,7 +9,7 @@
     "/info": {
       "get": {
         "tags": ["Informações"],
-        "summary": "Obter toda as informações",
+        "summary": "Obter todas as informações",
         "responses": {
           "200": {
             "description": "Retorna uma lista de informações",
@@ -23,6 +23,31 @@
                 }
               }
             }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Informações"],
+        "summary": "Cadastrar uma nova informação",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/infoInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Informação cadastrada com sucesso"
+          },
+          "400": {
+            "description": "Requisição inválida"
+          },
+          "500": {
+            "description": "Erro interno ao cadastrar informação"
           }
         }
       }
@@ -103,7 +128,7 @@
           },
           "title": {
             "type": "string",
-            "description": "Titulo da Informação"
+            "description": "Título da Informação"
           },
           "description": {
             "type": "string",
@@ -117,11 +142,11 @@
         "properties": {
           "title": {
             "type": "string",
-            "description": "Titulo da Informação"
+            "description": "Título da Informação"
           },
           "description": {
             "type": "string",
-            "description": "Descriçao da Informação"
+            "description": "Descrição da Informação"
           }
         }
       }
