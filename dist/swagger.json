@@ -1,0 +1,155 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Manual do Aluno API",
+        "description": "API responsável por gerenciar todo o conteúdo do app Manual do Aluno",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/info": {
+            "get": {
+                "tags": ["Informações"],
+                "summary": "Obter todas as informações",
+                "responses": {
+                    "200": {
+                        "description": "Retorna uma lista de informações",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/info"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": ["Informações"],
+                "summary": "Cadastrar uma nova informação",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/infoInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Informação cadastrada com sucesso"
+                    },
+                    "400": {
+                        "description": "Requisição inválida"
+                    },
+                    "500": {
+                        "description": "Erro interno ao cadastrar informação"
+                    }
+                }
+            }
+        },
+        "/info/{id}": {
+            "put": {
+                "tags": ["Informações"],
+                "summary": "Atualizar uma informação",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID da informação a ser atualizada",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/infoInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Informação atualizada com sucesso"
+                    },
+                    "404": {
+                        "description": "Informação não encontrada"
+                    },
+                    "500": {
+                        "description": "Falha ao atualizar o registro da informação"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Informações"],
+                "summary": "Remover uma informação",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID da informação a ser deletada",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Informação deletada com sucesso"
+                    },
+                    "404": {
+                        "description": "Informação não encontrada"
+                    },
+                    "500": {
+                        "description": "Falha ao deletar o registro da informação"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "info": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "ID da Informação"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Título da Informação"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Descrição da Informação"
+                    }
+                }
+            },
+            "infoInput": {
+                "type": "object",
+                "required": ["title", "description"],
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Título da Informação"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Descrição da Informação"
+                    }
+                }
+            }
+        }
+    }
+}
