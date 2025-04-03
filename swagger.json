@@ -63,6 +63,32 @@
             "description": "Falha ao atualizar o registro da informação"
           }
         }
+      },
+      "delete": {
+        "tags": ["Informações"],
+        "summary": "Remover uma informação",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID da informação a ser deletada",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Informação deletada com sucesso"
+          },
+          "404": {
+            "description": "Informação não encontrada"
+          },
+          "500": {
+            "description": "Falha ao deletar o registro da informação"
+          }
+        }
       }
     }
   },
